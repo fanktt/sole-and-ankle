@@ -53,16 +53,21 @@ const ShoeCard = ({
       <Wrapper>
         <ImageWrapper>
           <Image alt="" src={imageSrc} />
-          <InfoTag>{infoText}</InfoTag>
+          {variant !== 'default' && <InfoTag>{infoText}</InfoTag> }
         </ImageWrapper>
         <Spacer size={12} />
         <Row>
           <Name>{name}</Name>
-          <Price style={{'--decoration': variant === 'on-sale' ? 'line-through' : 'none' }}>{formatPrice(price)}</Price>
+          <Price style={{
+                '--decoration': variant === 'on-sale' ? 'line-through' : undefined,
+                '--color': variant === 'on-sale' ? COLORS.gray[700] : undefined,
+          }}>{formatPrice(price)}</Price>
         </Row>
         <Row>
           <ColorInfo>{pluralize('Color', numOfColors)}</ColorInfo>
-          <SalePrice>{variant === 'on-sale' ? formatPrice(salePrice) : ''}</SalePrice>
+          {variant === 'on-sale' ? (
+            <SalePrice>{formatPrice(salePrice)}</SalePrice>
+          ) : undefined}
         </Row>
       </Wrapper>
     </Link>
@@ -72,7 +77,6 @@ const ShoeCard = ({
 const Link = styled.a`
   text-decoration: none;
   color: inherit;
-  flex: 0 1 340px;
 `;
 
 const Wrapper = styled.article``;
@@ -100,6 +104,7 @@ const Name = styled.h3`
 
 const Price = styled.span`
   text-decoration: var(--decoration);
+  color: var(--color);
 `;
 
 const ColorInfo = styled.p`
@@ -116,8 +121,10 @@ const Tag = styled.div`
   top: 12px;
   right: -4px;
   display: inline-block;
-  padding: 8px;
-  width: fit-content;
+  height: 32px;
+  line-height: 32px;
+  font-size: ${14 / 18}rem;
+  padding: 0 10px;
   border-radius: 2px;
   color: ${COLORS.white};
   font-weight: ${WEIGHTS.bold};
