@@ -49,7 +49,7 @@ const Wrapper = styled.div`
 `;
 
 const LeftColumn = styled.div`
-  flex: 0 0 248px;
+  flex: 0 1 248px;
 `;
 
 const MainColumn = styled.div`
